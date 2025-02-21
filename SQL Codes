@@ -1,0 +1,262 @@
+-- SETTING UP MY SQL ENVIRONMENT
+CREATE DATABASE SplendorAnalyticsDB;
+USE SplendorAnalyticsDB;
+
+
+--DESIGNING MY DATABASE SCHEMA
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY IDENTITY (1,1),
+    Name VARCHAR(30),
+    Email VARCHAR(50) UNIQUE,
+    EnrollmentDate DATE
+);
+
+CREATE TABLE Instructors (
+    InstructorID INT PRIMARY KEY IDENTITY (1,1),
+    Name VARCHAR(30),
+    ContactDetails VARCHAR(50),
+    ExperienceYears INT
+);
+
+CREATE TABLE Courses (
+    CourseID INT PRIMARY KEY IDENTITY (1,1),
+    CourseName VARCHAR(50),
+    CourseLevel VARCHAR(8),
+    InstructorID INT,
+    FOREIGN KEY (InstructorID) REFERENCES Instructors(InstructorID)
+);
+
+CREATE TABLE Enrollments (
+    EnrollmentID INT PRIMARY KEY IDENTITY (1,1),
+    StudentID INT,
+    CourseID INT,
+    Grade FLOAT,
+    FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+
+
+--INSERTING DATA INTO THE STUDENTS TABLE
+INSERT INTO Students (StudentID, Name, Email, EnrollmentDate) VALUES 
+(1, 'Chukwuemeka Okonkwo', 'chukwuemeka.okonkwo@splendor.edu.ng', '2023-01-10'),
+(2, 'Aisha Bello', 'aisha.bello@splendor.edu.ng', '2023-02-15'),
+(3, 'Segun Adeyemi', 'segun.adeyemi@splendor.edu.ng', '2023-03-22'),
+(4, 'Ngozi Chibueze', 'ngozi.chibueze@splendor.edu.ng', '2023-04-10'),
+(5, 'Ibrahim Musa', 'ibrahim.musa@splendor.edu.ng', '2023-05-18'),
+(6, 'Funke Alabi', 'funke.alabi@splendor.edu.ng', '2023-06-25'),
+(7, 'Obinna Nwankwo', 'obinna.nwankwo@splendor.edu.ng', '2023-07-12'),
+(8, 'Halima Yusuf', 'halima.yusuf@splendor.edu.ng', '2023-08-08'),
+(9, 'Tope Olayemi', 'tope.olayemi@splendor.edu.ng', '2023-09-14'),
+(10, 'Bukola Adebayo', 'bukola.adebayo@splendor.edu.ng', '2023-10-20'),
+(11, 'Chinedu Eze', 'chinedu.eze@splendor.edu.ng', '2023-11-11'),
+(12, 'Fatima Danjuma', 'fatima.danjuma@splendor.edu.ng', '2023-12-05'),
+(13, 'Samuel Obi', 'samuel.obi@splendor.edu.ng', '2024-01-15'),
+(14, 'Maryam Garba', 'maryam.garba@splendor.edu.ng', '2024-02-18'),
+(15, 'Peter Iweala', 'peter.iweala@splendor.edu.ng', '2024-03-22'),
+(16, 'Joy Uche', 'joy.uche@splendor.edu.ng', '2024-04-10'),
+(17, 'Kelechi Nnamdi', 'kelechi.nnamdi@splendor.edu.ng', '2024-05-25'),
+(18, 'Esther Adamu', 'esther.adamu@splendor.edu.ng', '2024-06-30'),
+(19, 'Daniel Ifeanyi', 'daniel.ifeanyi@splendor.edu.ng', '2024-07-19'),
+(20, 'Musa Sani', 'musa.sani@splendor.edu.ng', '2024-08-15');
+
+SET IDENTITY_INSERT Students ON; --I ran into erros so I had to temporarily enable IDENTITY_INSERT so that I can insert StudentID manually. Then I re-ran the code to insert the data into the table
+SET IDENTITY_INSERT Students OFF; --After inserting the data into the table, I had to Turn OFF IDENTITY_INSERT so that entry would be automatic afterwards.
+
+
+--INSERTING DATA INTO THE INSTRUCTORS TABLE
+INSERT INTO Instructors (InstructorID, Name, ContactDetails, ExperienceYears) VALUES 
+(1, 'Dr. Emmanuel Uche', '08031234567', 12),
+(2, 'Dr. Amina Abdullahi', '08022345678', 8),
+(3, 'Prof. Tunde Balogun', '08033456789', 15),
+(4, 'Mrs. Chinwe Okoro', '08044567890', 6),
+(5, 'Dr. Abdullahi Sadiq', '08055678901', 10),
+(6, 'Mr. Bayo Adekunle', '08066789012', 7),
+(7, 'Mrs. Grace Eze', '08077890123', 9),
+(8, 'Dr. Funsho Kolawole', '08088901234', 14),
+(9, 'Prof. Nkiru Okafor', '08099012345', 11),
+(10, 'Mr. James Oladipo', '08100123456', 5),
+(11, 'Dr. Yetunde Ogunleye', '08111234567', 13),
+(12, 'Prof. Chigozie Anozie', '08122345678', 16),
+(13, 'Dr. Sani Mohammed', '08133456789', 9),
+(14, 'Mrs. Amaka Okwuosa', '08144567890', 8),
+(15, 'Dr. Femi Adetayo', '08155678901', 10),
+(16, 'Prof. Peter Nwachukwu', '08166789012', 17),
+(17, 'Mr. Olumide Adeyemi', '08177890123', 6),
+(18, 'Dr. Chidinma Uzor', '08188901234', 7),
+(19, 'Prof. Rasheed Bello', '08199012345', 18),
+(20, 'Mrs. Florence Adebanjo', '08200123456', 12),
+(21, 'Dr. Ibrahim Danladi', '08211234567', 14),
+(22, 'Prof. Kemi Oyelade', '08222345678', 19),
+(23, 'Dr. Chinedu Onwuegbuchi', '08233456789', 9),
+(24, 'Mr. Hassan Yusuf', '08244567890', 5),
+(25, 'Dr. Martha Umeh', '08255678901', 10);
+
+SET IDENTITY_INSERT Instructors ON; --I ran into erros so I had to temporarily enable IDENTITY_INSERT so that I can insert InstructorsID manually. Then I re-ran the code to insert the data into the table
+SET IDENTITY_INSERT Instructors OFF; --After inserting the data into the table, I had to Turn OFF IDENTITY_INSERT so that entry would be automatic afterwards.
+ 
+
+ --INSERTING DATA INTO THE COURSES TABLE
+ INSERT INTO Courses (CourseID, CourseName, CourseLevel, InstructorID) VALUES 
+(1, 'Advanced Mathematics', 'Advanced', 1),
+(2, 'Basic Science', 'Beginner', 2),
+(3, 'Computer Programming', 'Intermediate', 3),
+(4, 'Physics for Engineers', 'Advanced', 4),
+(5, 'Business Administration', 'Beginner', 5),
+(6, 'Data Science', 'Advanced', 6),
+(7, 'Financial Accounting', 'Intermediate', 7),
+(8, 'Digital Marketing', 'Beginner', 8),
+(9, 'Artificial Intelligence', 'Advanced', 9),
+(10, 'Software Engineering', 'Intermediate', 10),
+(11, 'Human Resource Management', 'Beginner', 11),
+(12, 'Cybersecurity Fundamentals', 'Intermediate', 12),
+(13, 'Machine Learning', 'Advanced', 13),
+(14, 'Corporate Finance', 'Advanced', 14),
+(15, 'Database Management Systems', 'Intermediate', 15),
+(16, 'Ethical Hacking', 'Advanced', 16),
+(17, 'Econometrics', 'Advanced', 17),
+(18, 'Psychology of Learning', 'Intermediate', 18),
+(19, 'Mobile App Development', 'Advanced', 19),
+(20, 'Public Relations & Branding', 'Beginner', 20),
+(21, 'Renewable Energy Engineering', 'Advanced', 21),
+(22, 'Political Science & Governance', 'Intermediate', 22),
+(23, 'Blockchain Technology', 'Advanced', 23),
+(24, 'Project Management', 'Beginner', 24),
+(25, 'Supply Chain & Logistics', 'Intermediate', 25);
+
+SET IDENTITY_INSERT Courses ON; --I ran into erros so I had to temporarily enable IDENTITY_INSERT so that I can insert CoursesID manually. Then I re-ran the code to insert the data into the table
+ALTER TABLE Courses ALTER COLUMN CourseLevel VARCHAR(15); --I ran this code to fix the error I was getting due to the CourseLevel Constraint I put
+SET IDENTITY_INSERT Courses OFF; --After inserting the data into the table, I had to Turn OFF IDENTITY_INSERT so that entry would be automatic afterwards.
+
+--INSERTING DATA INTO THE ENROLLMENTS TABLE
+INSERT INTO Enrollments (EnrollmentID, StudentID, CourseID, Grade) VALUES 
+(1, 1, 1, 3.9),
+(2, 2, 2, 3.5),
+(3, 3, 3, 3.8),
+(4, 4, 4, 3.6),
+(5, 5, 5, 3.4),
+(6, 6, 6, 3.7),
+(7, 7, 7, 3.2),
+(8, 8, 8, 3.0),
+(9, 9, 9, 3.9),
+(10, 10, 10, 3.8),
+(11, 11, 1, 3.5),
+(12, 12, 2, 3.7),
+(13, 13, 3, 3.9),
+(14, 14, 4, 3.4),
+(15, 15, 5, 3.3),
+(16, 16, 6, 3.8),
+(17, 17, 7, 3.5),
+(18, 18, 8, 3.2),
+(19, 19, 9, 3.6),
+(20, 20, 10, 3.1),
+(21, 5, 1, 3.7),
+(22, 6, 2, 3.5),
+(23, 7, 3, 3.8),
+(24, 8, 4, 3.2),
+(25, 9, 5, 3.6),
+(26, 10, 6, 3.9),
+(27, 11, 7, 3.5),
+(28, 12, 8, 3.4),
+(29, 13, 9, 3.7),
+(30, 14, 10, 3.9);
+SET IDENTITY_INSERT Enrollments ON; --I ran into erros so I had to temporarily enable IDENTITY_INSERT so that I can insert EnrollmentID manually. Then I re-ran the code to insert the data into the table
+SET IDENTITY_INSERT Enrollments OFF; --After inserting the data into the table, I had to Turn OFF IDENTITY_INSERT so that entry would be automatic afterwards.
+
+
+
+--DATA ANALYSIS PHASE
+
+---RETRIEVING DATA (Basic SELECT Queries)
+
+-- To Get all enrolled students' names & IDs
+SELECT StudentID, Name FROM Students;
+--To Get all course names & codes
+SELECT CourseID, CourseName FROM Courses;
+--To Get all instructors' names & IDs
+SELECT InstructorID, Name FROM Instructors;
+--To Get all student-course enrollments (StudentID & CourseID)
+SELECT StudentID, CourseID FROM Enrollments;
+--To Get all students’ grades & corresponding courses
+SELECT StudentID, CourseID, Grade FROM Enrollments;
+
+
+---FILTERING DATA (WHERE, JOIN, LIKE, HAVING)
+
+-- TO Retrieve students enrolled in courses with 'Advanced' in their name
+SELECT Students.StudentID, Students.Name 
+FROM Students 
+JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+JOIN Courses ON Enrollments.CourseID = Courses.CourseID
+WHERE Courses.CourseName LIKE '%Advanced%';
+
+-- TO Get course codes & names for instructors with more than 5 years of experience
+SELECT Courses.CourseID, Courses.CourseName 
+FROM Courses 
+JOIN Instructors ON Courses.InstructorID = Instructors.InstructorID
+WHERE Instructors.ExperienceYears > 5;
+
+-- TO Fetch students who have enrolled in more than 3 courses
+SELECT Students.StudentID, Students.Name 
+FROM Students 
+JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+GROUP BY Students.StudentID, Students.Name
+HAVING COUNT(Enrollments.CourseID) > 3;
+
+-- TO Retrieve instructors teaching courses with more than 30 students enrolled
+SELECT Instructors.InstructorID, Instructors.Name 
+FROM Instructors
+JOIN Courses ON Instructors.InstructorID = Courses.InstructorID
+JOIN Enrollments ON Courses.CourseID = Enrollments.CourseID
+GROUP BY Instructors.InstructorID, Instructors.Name
+HAVING COUNT(Enrollments.StudentID) > 30;
+
+-- TO Get grades & course codes for students with GPA > 3.5
+SELECT StudentID, CourseID, Grade 
+FROM Enrollments 
+WHERE Grade > 3.5;
+
+
+--- SORTING DATA (ORDER BY)
+
+--To Retrieve all enrolled students, sorted alphabetically by name
+SELECT StudentID, Name 
+FROM Students 
+ORDER BY Name ASC;
+
+--To Get all courses, sorted alphabetically by course code
+SELECT CourseID, CourseName 
+FROM Courses 
+ORDER BY CourseID ASC;
+
+--To Fetch instructors teaching courses, sorted alphabetically by instructor name
+SELECT InstructorID, Name 
+FROM Instructors 
+ORDER BY Name ASC;
+
+--To Retrieve student-course enrollments, sorted in ascending order of StudentID
+SELECT StudentID, CourseID 
+FROM Enrollments 
+ORDER BY StudentID ASC;
+
+--To Get grades & course codes for all students, sorted in descending order of grades
+SELECT StudentID, CourseID, Grade 
+FROM Enrollments 
+ORDER BY Grade DESC;
+
+
+--DISTINCT QUERIES (DISTINCT)
+
+---To Retrieve distinct course levels available
+SELECT DISTINCT CourseLevel FROM Courses;
+
+---To Get distinct StudentIDs of enrolled students
+SELECT DISTINCT StudentID FROM Enrollments;
+
+---To Fetch distinct InstructorIDs of all instructors
+SELECT DISTINCT InstructorID FROM Courses;
+
+---To Retrieve distinct course codes from available courses
+SELECT DISTINCT CourseID FROM Courses;
+
+---To Get distinct grades recorded for all students
+SELECT DISTINCT Grade FROM Enrollments;
